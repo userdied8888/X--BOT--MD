@@ -4,7 +4,6 @@ const fs = require('fs');
 const fetch = require('node-fetch');
 const ffmpeg = require('fluent-ffmpeg');
 const ID3Writer = require('browser-id3-writer');
-const { ImgurClient } = require('imgur');
 const os = require('os');
 const path = require('path');
 const webp = require('node-webpmux')
@@ -183,53 +182,5 @@ async function appendMp3Data(audioBuffer, coverBuffer, options = {
 }
 
 
-async function mediaToUrl(buffer, m) {
-	const client = new ImgurClient({
-		clientId: "a0113354926015a"
-	});
-	let url;
-	try {
-		let {
-			mime,
-			data
-		} = await m.getFile(buffer);
-		if (mime.startsWith("audio")) {
-			data = await convertToMp4(buffer);
-			mime = "video/mp4";
-		}
-		const filePath = await createTmpFile(data, mime.split("/")[0]);
-			const imgurRes = await client.upload({
-				image: fs.createReadStream(filePath),
-				type: 'stream',
-			});
-		if (imgurRes.data === "Imgur is temporarily over capacity. Please try again later.") {
-				const base64 = buffer.toString('base64');
-			const imgbbRes = await axios.post(
-				"https://api.imgbb.com/1/upload",
-				new URLSearchParams({
-					key: "aa4a595a2e4f73a44ca2e317f01c035b",
-					image: base64,
-				}), {
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded'
-					},
-				});
-			if (!imgbbRes || !imgbbRes.data || !imgbbRes.data.data.url) {
-				throw new Error("imgbb upload did not return a valid URL");
-			}
-				url = imgbbRes.data.data.url;
-			} else {
-			url = imgurRes.data.link;
-			}
-			if (fs.existsSync(filePath)) {
-				fs.unlinkSync(filePath);
-			}
-			return url;
-	} catch (e) {
-		console.error("Error in mediaToUrl:", e);
-		return null;
-	}
-}
 
-
-module.exports = {createTmpFile, createFile, addExifToWebP, imageToWebP, videoToWebP, convertToMp4, convertToMp3, getBuffer, appendMp3Data, mediaToUrl};
+module.exports = {createTmpFile, createFile, addExifToWebP, imageToWebP, videoToWebP, convertToMp4, convertToMp3, getBuffer, appendMp3Data};
