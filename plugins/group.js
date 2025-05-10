@@ -1,4 +1,4 @@
-const {delay} = require('@whiskeysockets/baileys');
+const {delay} = require('baileys-duplicated');
 const {Sparky, isPublic} = require('../lib');
 const {getString} = require('./pluginsCore');
 const lang = getString('group');
