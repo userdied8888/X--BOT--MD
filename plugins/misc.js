@@ -2,6 +2,7 @@ const {
 	Sparky,
 	isPublic
 } = require("../lib/");
+const config = require("../config.js");
 
 
 Sparky({
@@ -44,7 +45,7 @@ Sparky({
 			quoted: m
 		});
 		const end = new Date().getTime();
-		return await m.sendMsg(m.jid, `_Latency : ${end - start} ms_`, {
+		return await m.sendMsg(m.jid, `_${config.PING} : ${end - start} ms_`, {
 			edit: pong.key
 		});
 	});
