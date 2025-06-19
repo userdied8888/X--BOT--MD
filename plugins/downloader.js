@@ -38,15 +38,28 @@ Sparky({
     name: "gpt",
     fromMe: true,
     category: "misc",
-    desc: ""
+    desc: "Query GPT-3 with a prompt"
 },
-async ({
-    m, client, args
-}) => {
+async ({ m, client, args }) => {
+    // Get arguments either from command or quoted message
     args = args || m.quoted?.text;
-    if (!args) return await m.reply(lang.NEED_URL);
-        let q = await getJson(config.API "/api/search/gpt3?search=" + args)
-        return m.reply(q.data.response)
+    
+    // Check if prompt exists
+    if (!args) return await m.reply("Please provide a prompt or quote a message");
+    
+    try {
+        // Make API request
+        const q = await getJson(`${config.API}/api/search/gpt3?search=${encodeURIComponent(args)}`);
+        
+        // Check if response is valid
+        if (!q?.data?.response) throw new Error("Invalid API response");
+        
+        // Send the response
+        return await m.reply(q.data.response);
+    } catch (error) {
+        console.error("GPT Error:", error);
+        return await m.reply("An error occurred while processing your request");
+    }
 });
 // Sparky({
 //     name: "apk",
