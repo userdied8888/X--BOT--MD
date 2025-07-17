@@ -14,7 +14,7 @@ if (fs.existsSync("config.env")) {
 	});
 }
 
-const DATABASE_URL = process.env.DATABASE_URL || "postgresql://bella:K6HulRhBCLx64FNGmPEuPg@xbotmdv3-8961.j77.aws-ap-south-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"; // Corrected SQLite format
+const DATABASE_URL = process.env.DATABASE_URL || "postgresql://neondb_owner:npg_yzqIj3CEXp2d@ep-young-fire-a2xx84dw-pooler.eu-central-1.aws.neon.tech/neondb?sslmode"; // Corrected SQLite format
 
 if (!DATABASE_URL.startsWith("sqlite://") && !DATABASE_URL.startsWith("postgres://") && !DATABASE_URL.startsWith("postgresql://")) {
 	throw new Error("Invalid DATABASE_URL format. Use 'sqlite://' or 'postgres://'");
@@ -62,7 +62,7 @@ module.exports = {
 	RENDER_APP_NAME: process.env.RENDER_APP_NAME || "",
 	LANGUAGE: process.env.LANGUAGE || "english",
 	LOGS: toBool(process.env.LOGS || "false"),
-	MENU_TYPE: process.env.MENU_TYPE || "small", // Menu style: big, small, image, document, text, call, payment
+	MENU_TYPE: process.env.MENU_TYPE || "image", // Menu style: big, small, image, document, text, call, payment
 	MENU_FONT: process.env.MENU_FONT || "tiny", // randomStyle, strikeThrough, wingdings, vaporwave, typewriter, analucia, tildeStrikeThrough, underline, doubleUnderline, slashThrough, sparrow, heartsBetween, arrowBelow, crossAboveBelow, creepify, bubbles, mirror, squares, roundsquares, flip, tiny, createMap, serif_I, manga, ladybug, runes, serif_B, serif_BI, serif_I, fancy1, fancy2, fancy3, fancy4, fancy5, fancy6, fancy7, fancy8, fancy9, fancy10, fancy11, fancy12, fancy13, fancy14, fancy15, fancy16, fancy17, fancy18, fancy19, fancy20, fancy21, fancy22, fancy23, fancy24, fancy25, fancy26, fancy27, fancy28, fancy29, fancy30, fancy31, fancy32, fancy33
 	PORT: process.env.PORT || 8080,
 	PING: process.env.PING || "Latency",
