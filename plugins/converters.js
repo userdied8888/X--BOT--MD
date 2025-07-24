@@ -41,13 +41,8 @@ Sparky(
         }
         try {
             m.react("⏫");
-        if (m.quoted.message.imageMessage) {
-            return await m.sendMsg(m.jid, await m.quoted.download(), { quoted: m }, 'image')
-        } else if (m.quoted.message.audioMessage) {
-            return await m.sendMsg(m.jid, await m.quoted.download(), { mimetype: "audio/mpeg", quoted: m }, 'audio')
-        } else if (m.quoted.message.videoMessage) {
-            return await m.sendMsg(m.jid, await m.quoted.download(), { quoted: m }, 'video')
-        }
+		let buff = await m.quoted.download();
+		return await m.sendFile(buff);
         } catch (e) {
             return m.react("❌");
         } 
