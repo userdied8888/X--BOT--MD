@@ -28,7 +28,7 @@ Sparky({
 
 Sparky(
     {
-        name: "vv",
+        name: "👀👀",
         fromMe: true,
         category: "converters",
         desc: "Resends the view Once message"
