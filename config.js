@@ -72,13 +72,13 @@ module.exports = {
 	REJECT_CALL_MSG: process.env.REJECT_CALL_MSG || "_Calls are not allowed. Please don’t call again!._",
 	SESSION_ID: process.env.SESSION_ID || "",
 	START_MSG: toBool(process.env.START_MSG || "true"),
-	STICKER_DATA: process.env.STICKER_DATA || `X BOT MD;ASWIN SPARKY`,
-	SUDO: process.env.SUDO || "917012984396",
-	WORK_TYPE: process.env.WORK_TYPE || "public",
+	STICKER_DATA: process.env.STICKER_DATA || `_🇹🇭⃝࿅ᴛͥʜͭ͢ᴇᴊᷟᴜꜱᷤᴢ͢ ⧽↝💎  `,
+	SUDO: process.env.SUDO || "918129927512",
+	WORK_TYPE: process.env.WORK_TYPE || "private",
 	SAVE_STATUS: toBool(process.env.SAVE_STATUS || "false"),
 	STATUS_REPLY: toBool(process.env.STATUS_REPLY || "false"),
 	STATUS_REPLY_MSG: process.env.STATUS_REPLY_MSG || "Nice Status Brother 🦫✨",
-	STATUS_REACTION: toBool(process.env.STATUS_REACTION || "true"),
+	STATUS_REACTION: toBool(process.env.STATUS_REACTION || "false"),
 	STATUS_REACTION_EMOJI: process.env.STATUS_REACTION_EMOJI || "🍉,🍓,🎀,💀,💗,📍,🔪,🛒,☠️,🐍,👍🏻",
 	WARN_COUNT: process.env.WARN_COUNT || "3"
 };
