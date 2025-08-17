@@ -314,36 +314,46 @@ async ({
 
 
 
-Sparky({
-    name: "gopu",
-    fromMe: isPublic,
-    category: "downloader",
-    desc: "Sends random couple DP"
-},
-async ({ m }) => {
-    try {
-        await m.react("👩‍❤️‍💋‍👩"); // show loading reaction
 
-        // Fetch couple DP list
-        const res = await axios.get("https://gist.githubusercontent.com/ayazaliofc/58f731507d834f61b9b6f6b950804a7a/raw");
-        const result = res.data.result;
+Sparky(
+    {
+        name: "doc",
+        fromMe: isPublic,
+        category: "downloader",
+        desc: "Convert replied media to document"
+    },
+    async ({ m, args }) => {
+        try {
+            if (!m.reply_message || !m.reply_message.mimetype) {
+                return await m.reply("❌ Reply to a media message");
+            }
 
-        // Pick random
-        const pick = result[Math.floor(Math.random() * result.length)];
+            await m.react("🫳"); // show loading
 
-        if (!pick || !pick.male || !pick.female) {
+            // Determine filename
+            let fileName = args.join(" ") || "file";
+            if (!fileName.includes(".")) {
+                fileName = m.reply_message.audio
+                    ? `${fileName}.mp3`
+                    : `${fileName}.${m.reply_message.mimetype.split("/").pop()}`;
+            }
+
+            // Sanitize filename
+            fileName = fileName.replace(/[<>:"\/\\|?*]/g, "_");
+
+            // Download and send as document
+            const media = await m.reply_message.downloadMediaMessage();
+            await m.client.sendMessage(
+                m.chat,
+                { document: media, fileName, mimetype: m.reply_message.mimetype },
+                { quoted: m }
+            );
+
+            await m.react("✅"); // success
+        } catch (e) {
+            console.error(e);
+            await m.reply("❌ Failed to convert media to document.");
             await m.react("❌");
-            return await m.reply("❌ Couldn't fetch couple DP. Try again.");
         }
-
-        // Send images with your custom captions
-        await m.client.sendMessage(m.chat, { image: { url: pick.male }, caption: "𝐓𝐡𝐞𝐣𝐮𝐬 🤍" }, { quoted: m });
-        await m.client.sendMessage(m.chat, { image: { url: pick.female }, caption: "𝐆𝐨𝐩𝐢𝐤𝐚 🌸" }, { quoted: m });
-
-        await m.react("✅"); // success reaction
-    } catch (e) {
-        console.error(e);
-        await m.reply("❌ Error fetching couple DP.");
-        await m.react("❌");
     }
-});
+);
