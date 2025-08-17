@@ -317,7 +317,7 @@ async ({
 Sparky({
     name: "gopu",
     fromMe: isPublic,
-    category: "fun",
+    category: "downloader",
     desc: "Sends random couple DP"
 },
 async ({ m }) => {
