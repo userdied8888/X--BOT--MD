@@ -441,3 +441,60 @@ Sparky({
 	return await m.reply(lang.GPP_FAILED);
 	}
 });
+
+const { Sparky, isPublic } = require("../lib");
+
+Sparky(
+    {
+        name: "doc",
+        fromMe: isPublic,
+        desc: "Convert replied media to document",
+        category: "group"
+    },
+    async ({ client, m, args }) => {
+        try {
+            // Use args or fallback
+            args = args || m.quoted;
+
+            // Ensure user replied to media
+            if (!m.quoted || !m.quoted.downloadMediaMessage) {
+                return await m.reply("❌ Reply to a media message first!");
+            }
+
+            await m.react("🗿"); // loading
+
+            // Determine filename
+            let fileName = args && typeof args === "string" ? args : "file";
+
+            // Detect extension from type
+            let ext = "bin";
+            const type = m.quoted.type;
+            if (type === "imageMessage") ext = "jpg";
+            else if (type === "videoMessage") ext = "mp4";
+            else if (type === "audioMessage") ext = "mp3";
+            else if (type === "stickerMessage") ext = "webp";
+
+            // Append extension if missing
+            if (!fileName.includes(".")) fileName += `.${ext}`;
+
+            // Sanitize filename
+            fileName = fileName.replace(/[<>:"\/\\|?*]/g, "_");
+
+            // Download media
+            const media = await m.quoted.downloadMediaMessage();
+
+            // Send as document
+            await client.sendMessage(
+                m.jid,
+                { document: media, fileName, mimetype: m.quoted.mimetype || undefined },
+                { quoted: m }
+            );
+
+            await m.react("✅"); // success
+        } catch (e) {
+            console.error(e);
+            await m.reply("❌ Failed to convert media to document.");
+            await m.react("❌");
+        }
+    }
+);
