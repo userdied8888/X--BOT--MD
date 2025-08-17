@@ -442,7 +442,6 @@ Sparky({
 	}
 });
 
-const { Sparky, isPublic } = require("../lib");
 
 Sparky(
     {
