@@ -313,19 +313,20 @@ async ({
 });
 
 Sparky({
-    name: "find",
+    name: "findsong",
     fromMe: isPublic,
-    category: "tools",   // or keep as "downloader" if you want
-    desc: "Identify a song from audio/video"
+    category: "tools",
+    desc: "Identify a song from audio or video"
 },
 async ({ m }) => {
     try {
-        if (!m.quoted || (!m.quoted.audio && !m.quoted.video)) {
-            return await m.reply("🎵 Reply to an audio or video to identify the song.");
+        if (!m.quoted || !["audioMessage", "videoMessage"].includes(m.quoted.mtype)) {
+            return await m.reply("🎵 Reply to an *audio* or *video* to identify the song.");
         }
 
         await m.react('🔎');
 
+        // download the quoted media
         const media = await m.quoted.download();
         const formData = new FormData();
         formData.append("file", media, "song.mp3");
@@ -343,7 +344,7 @@ async ({ m }) => {
 🎤 Artist: ${data.artists}`
         );
 
-        await m.react('🍭');
+        await m.react('✅');
     } catch (e) {
         console.error(e);
         await m.reply("❌ Error identifying song.");
