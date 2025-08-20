@@ -21,7 +21,7 @@ Sparky(
         if (!args) return await m.reply(lang.NEED_URL);
         //if (isUrl(args)) return await m.reply(lang.NOT_URL);
         try {
-            await m.react('⬇️');
+            await m.react('🎬');
             let response = await getJson(config.API + "/api/downloader/igdl?url=" + args);
             for (let i of response.data) {
                 await m.sendMsg(m.jid, i.url, { quoted: m }, i.type)
@@ -35,7 +35,7 @@ Sparky(
 );
 
 Sparky({
-    name: "gpt",
+    name: "☠️",
     fromMe: true,
     category: "misc",
     desc: "Query GPT-3 with a prompt"
