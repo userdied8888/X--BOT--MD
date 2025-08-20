@@ -42,7 +42,7 @@ DATABASE.authenticate().then(() => console.log("Database connection established 
 module.exports = {
 	VERSION: require("./package.json").version,
 	ALIVE: process.env.ALIVE || "Hello i'm alive",
-	ALWAYS_ONLINE: toBool(process.env.ALWAYS_ONLINE || "false"),
+	ALWAYS_ONLINE: toBool(process.env.ALWAYS_ONLINE || "true"),
 	BGMBOT : toBool(process.env.BGMBOT || "true"),
 	API: "https://api-aswin-sparky.koyeb.app",
 	AUDIO_DATA: process.env.AUDIO_DATA || "X BOT MD;ASWIN SPARKY;https://files.catbox.moe/ttdne9.jpg",
